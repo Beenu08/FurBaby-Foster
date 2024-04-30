@@ -1,0 +1,239 @@
+
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    height: 100%;
+    width: 100%;
+}
+
+.outerDiv{
+    height: 100%;
+}
+.main{
+    width:100%;
+}
+.navBar{
+    width: inherit;
+    height:45px;
+    /* border-bottom-color: 5px 5px 5px 5px gray; */
+    display: flex;
+    align-items: center;
+    /* color: black; */
+}
+.logo {
+    margin-right: 10px;
+  }
+  
+  .title {
+    margin-left: auto;
+    text-align: right;
+  }
+  
+  .title h2 {
+    color: white;
+    margin: 5px 0;
+  }
+  
+  .title h6 {
+    color:coral;
+    margin-top: 5px;
+    padding-left: 4px;
+  }
+  .navbar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    margin-right: 10px;
+  }
+  
+  .title {
+    margin-left: auto;
+    flex-grow: 1; /* Allow title to grow */
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .title h2 {
+    margin: 5px 0;
+  }
+  
+  .title h4 {
+    margin-top: 5px;
+    padding-right: 4px;
+  }
+  
+
+.Modal-boot-SignUp,
+.Modal-boot-Login{
+    /* display: none;
+    width: 400px;
+    margin-top: 0px;
+    height: 100px;
+    border-radius: 0px; */
+    /* color: coral; */
+    display: none;
+    position: fixed;
+    top: 20%;
+    margin-top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 100px;
+    border-radius: 0;
+}
+.header-signup{
+    background-color:black;
+    height: 40px;
+    margin-bottom: 20px;
+    padding-right: 40px;
+}
+.signupnowbtn{
+    background-color:black;
+    color: coral;
+    /* color: black; */
+    border: 1px solid black;
+    height: 50px;
+    border-radius: 20px;
+}
+.signupnowbtn:active{
+    transform: translate(0px,5px);
+}
+.modal-header{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+.signupPage{
+    display: none;
+}
+.signupPage{
+    height:250px;
+    width:400px;
+    margin-top: 30px;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+.details{
+    width: 80%;
+    padding-top: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: larger;
+    text-align: left;
+    padding-left: 10px;
+} 
+.no-underLine{
+    text-decoration: none;
+    cursor:pointer;
+    color:coral;
+}
+
+#signup:hover{
+    cursor: pointer;
+}
+/* .Modal-boot-Login{
+     /* display: none;
+    width: 400px;
+    margin-top: 20px;
+    height: 100px;
+    border-radius: 0px;  
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 80%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 100px;
+    border-radius: 0;
+} */
+/* .navBar-Profile{
+    background-color: blue;
+} */
+
+.dashCareLogo{
+    border-radius:50%;
+    /* border-radius: 20%; */
+    align-items: center;
+    justify-content: center;
+    margin:auto;
+    margin-bottom: 20px;
+    /* border: 1px solid black;; */
+    height:150px;
+    width:150px;
+    margin-top: 20px;;
+}
+.Modal-boot-Settings,.Modal-boot-careSettings{
+    display: none;
+    width: 400px;
+    margin-top: 20px;
+    height: 100px;
+    border-radius: 0px;
+}
+.updatenowbtn{
+    background-color:black;
+    /* color: black; */
+    border: 1px solid black;
+    height: 50px;
+    border-radius: 20px;
+}
+.updatenowbtn:active{
+    transform: translate(0px,5px);
+}
+#forget:hover{
+cursor: pointer;
+}
+.res-card-photo{
+    height: 150px;
+    width:100px;
+    border-radius:50%
+}
+.btn-close#btn-cross {
+    color:coral !important;
+  }
+.DCT{
+    display: none;
+}
+
+  .navbar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    margin-right: 10px;
+  }
+  
+  .title {
+    margin-left: auto;
+    text-align: center;
+  }
+  
+  .title h2 {
+    margin: 5px 0;
+  }
+  
+  .title h6 {
+    margin-top: 5px;
+  }
+  #myCarousel, 
+#myCarousel .carousel-item, 
+#myCarousel .carousel-inner, 
+#myCarousel .bd-placeholder-img {
+    height: 600px; /* Set this to your desired height */
+    width:inherit;
+    margin: auto;
+}
+.dash{
+  background-color: coral;
+  color:black;
+}
+
+.form-label{
+  font-weight: bolder;
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FurBaby Foster</title>
+    <link rel="icon" type="image" href="pics/FF.jpg">
+    <link href="style/home.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js" integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- <script>
+        $(document).ready(function(){
+          let auser =   localStorage.getItem("activeuser");
+        // $("#email").val(auser);
+        });
+        </script> -->
+        <script>
+          var module= angular.module("myModule",[]);
+          var controller=module.controller("myController",function($scope,$http)
+          {
+            $scope.doFetchReviews=function(){
+              let auser =   localStorage.getItem("activeuser");
+              // console.log(auser);
+              let url="/fetchReviews?email="+auser;
+              $http.get(url).then(ok,notOk);
+              function ok(resp){
+                $scope.allRecords=resp.data;
+              }
+              function notOk(resp){
+                alert(resp.data);;
+              }
+            }
+          });
+          </script>
+</head>
+<body ng-app="myModule" ng-controller="myController" ng-init="doFetchReviews();"style="background-color: coral;" >
+<center>
+  <nav class="navbar "style="background-color:black;color:coral">
+    <div class="container-fluid">
+      <a class="">
+        <img src="pics/logoWeb.png" height="70px" width="70px">
+      </a>
+        <div  style="font-weight: bolder; font-size: larger;text-align: center;margin: auto;"><center>Reviews for You</center></div>
+        </div>
+        </nav> 
+        <div class="container" style="margin-top:10px;">
+          <div class="row" style=" margin-bottom: 10px;">
+              <div class="col-md-6" ng-repeat="obj in allRecords" style=" margin-bottom: 10px;">
+                  <div class="card">
+                    <div style="float: right;"></div>
+                      <div class="card-body">
+                        <h5 class="card-title" >
+                          Name: {{obj.name}}
+                        </h5>
+                        <p class="card-text">
+                          Rating: {{obj.star}}⭐
+                          <br>
+                          Reviews: {{obj.review}}
+                          <br>
+                        </p>
+                       
+                      </div>
+                    </div>
+              </div>
+          </div>
+      </div>
+        </center>
+        <script src="script/home.js"></script>
+        </body>
+        </html>
+    

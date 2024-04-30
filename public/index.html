@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FurBaby Foster</title>
+    <link rel="icon" type="image" href="pics/FF.jpg">
+    <link href="style/home.css" rel="stylesheet">
+    <link href="style/home2.scss" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+
+    <script>
+      $(document).ready(function(){
+    $("#signupbtn").click(function(){
+    $(".Modal-boot-SignUp").show(1000);
+    $(".Modal-boot-Login").hide();
+});
+$("#loginbtn").click(function(){
+    $(".Modal-boot-Login").show(1000);
+    $(".Modal-boot-SignUp").hide();
+
+});
+$("#login").click(function(){
+    $(".Modal-boot-SignUp").hide();
+    $(".Modal-boot-Login").show(1000);
+    $("#floatingInput").val("");
+    $("#floatingPassword").val("");
+    $("#userType").val("");
+    $("#emailtxt").html("");
+    $("#pswdErr").html("");
+
+});
+$("#signup").click(function(){
+    $(".Modal-boot-SignUp").show(1000);
+    $(".Modal-boot-Login").hide();
+    $(".Modal-boot-login").hide(1000);
+    $("#loginInput").val("");
+    $("#loginPassword").val("");
+    $("#LoginCredentials").html("");
+});
+
+$("#btn-cross").click(function(){
+    $(".Modal-boot-SignUp").hide(1000);
+    $("#floatingInput").val("");
+    $("#floatingPassword").val("");
+    $("#userType").val("");
+    $("#emailtxt").html("");
+    $("#pswdErr").html("");
+    
+});
+$("#btn-cross-login").click(function(){
+    $(".Modal-boot-Login").hide(1000);
+    $("#loginInput").val("");
+    $("#loginPassword").val("");
+    $("#LoginCredentials").html("");
+    
+});
+
+
+$("#floatingInput").blur(function(){
+    let obj= {
+        type:"get",
+        url:"/ajax-check-mail",
+        data:{
+            myEmail:$("#floatingInput").val(), //will be stored in query object
+        }
+    }
+    $.ajax(obj).done(function(resp){
+        // alert(resp);
+        if(resp=="Available"){
+            $("#emailtxt").html("");
+        // $("#emailtxt").css("color","green");
+        }else{
+            $("#emailtxt").html("<i>"+resp+"</i>");
+            $("#emailtxt").css("color","red");
+        }
+    })
+    .fail(function(err){
+        alert(err);
+    });
+});
+$("#signupnow").click(function(){
+    let obj2={
+        type:"get",
+        url:"/submit-details-ajax",
+        data:{
+            myEmail:$("#floatingInput").val(),
+            myPassword:$("#floatingPassword").val(),
+            myUserType:$("#usertype").val()
+        }
+    }
+    $.ajax(obj2).done(function(resp){
+        alert("Registered successfully");
+    }).fail(function(err){
+        alert(err.message);
+    })
+});
+
+
+
+      $("#loginnow").click(function(){
+    let email=$("#loginInput").val()
+    let obj3={
+        type:"get",
+        url:"/login-details-ajax",
+        data:{
+            myEmail:email,
+            myPassword:$("#loginPassword").val()
+        }
+    };
+$.ajax(obj3).done(function(resp){
+   if(resp!="Invalid Email/ Password"){
+    $("#LoginCredentials").html("User Type is: "+ resp);
+    $("#LoginCredentials").css("color", "");
+    let auser=localStorage.setItem("activeuser",email);
+    // alert(auser);
+   // setTimeout(function(){
+    if(resp=="Care Taker")
+    window.location.href="dash-care.html";
+    else
+        window.location.href="dash-citizen.html";
+   // },2000);
+    alert("Login Successfully");
+   }
+   else{
+    $("#LoginCredentials").html("Invalid Email/ Password");
+    $("#LoginCredentials").css("color","red");
+   }
+})
+.fail(function(err){
+    // $(".Modal-boot-SignUp").show(1000);
+    // alert(err.message);
+    $("#LoginCredentials").html("Fill your Login Credentials");
+    $("#LoginCredentials").css("color", "red");
+});
+});
+});
+
+      </script>
+</head>
+<body>
+<div class="main">
+    <div class="container-fluid" style="background-color: black; box-shadow: 2px 5px 0px rgba(255, 127, 80, 0.171);z-index: 100;" >
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3  ">
+          <div class="col-md-3 mb-2 mb-md-0 ">
+            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+              <div class="logo">
+                <img src="pics/logoWeb.png" height="70px" width="70px">
+              </div>
+              <div class="title" style="text-align: center;">
+                <h2>FurBaby Foster</h2>
+                <h6>Where Every Pet Feels At Home</h6>
+              </div>
+             
+            </a>
+          </div>
+    
+          <div class="col-md-3 text-end">
+            <button type="button" class="btn  me-2" id="loginbtn" style="background-color: coral;color: black;">Login</button>
+            <button type="button" class="btn me-2" id="signupbtn" style="background-color: coral;color: black;">SignUp</button>
+            <button type="button no-underLine" class="btn me-2"  style="background-color: coral;color: black;"><a href="dash-admin.html" class="no-underLine ms-100" style="color: black;">Admin</a></button>
+          </div>
+        </header>
+      </div>
+      <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel" >
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
+          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
+          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="pics/bg-4.jpg" width="100%" style="object-fit: cover;">
+            <div class="container">
+              <div class="carousel-caption text-start">
+                <!-- <h1>Example headline.</h1>
+                <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p>
+                <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p> -->
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="pics/bg-3.webp" width="100%" style="object-fit: contain;">
+            <div class="container">
+              <div class="carousel-caption">
+                <!-- <h1>Another example headline.</h1>
+                <p>Some representative placeholder content for the second slide of the carousel.</p>
+                <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p> -->
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="pics/bg-2.jpg" width="100%">
+            <div class="container">
+              <div class="carousel-caption text-end">
+                <!-- <h1>One more for good measure.</h1>
+                <p>Some representative placeholder content for the third slide of this carousel.</p>
+                <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    
+      <div class="services container-fluid" >
+    <div class="row mt-pt-0 py-2   " style="background-color:black; color:coral; height:70px; font-size: larger; font-weight: bolder;" ><center>OUR SERVICES</center></div>
+  <div class="row row-cols-1 row-cols-md-4 g-4 px-2 py-4 pt-0 " style="background-color: white;">
+    <div class="col">
+      <div class="card h-100"style="background-color: black; color: white;">
+        <img src="pics/house-2.png" class="card-img-top" alt="..."style="height: 100px; width: 100px; border-radius: 50%; margin: auto; margin-top: 20px;object-fit: cover;">
+        <div class="card-body">
+          <h5 class="card-title"style="margin: auto; text-align: center; color:white;">House Sitting</h5>
+          <p class="card-text pt-5 px-4"style="color: coral; text-align:justify">Offer house sitting services alongside pet care, ensuring the security and maintenance of the client's home while they're out of town.</p>
+        </div>
+      </div>
+    </div>
+      <div class="col">
+        <div class="card h-100 " style="background-color: black; color: white;">
+          <img src="pics/ver-2.jpg" class="card-img-top " alt="..." style="height: 100px; width: 100px; border-radius: 50%; margin: auto; margin-top: 20px;object-fit: cover;">
+          <div class="card-body ms-2">
+            <h5 class="card-title" style="margin: auto; text-align: center; color:white;">Verified</h5>
+            <p class="card-text pt-5 px-4" style="color: coral; text-align: justify;">Users can easily identify caregivers who have undergone verification processes, ensuring the safety and well-being of their beloved pets.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card h-10" style="background-color: black; color: white;">
+          <img src="pics/tranport-2.jpg" class="card-img-top" alt="..."style="height: 100px; width: 100px; border-radius: 50%; margin: auto; margin-top: 20px;object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title"style="margin: auto; text-align: center; color:white;">Pet Transportation</h5>
+            <p class="card-text pt-5 px-4"style="color: coral; text-align:justify">Provide transportation services to and from vet appointments, grooming sessions, or other necessary destinations while the family is away.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100" style="background-color: black; color: white;">
+          <img src="pics/time.jpg" class="card-img-top" alt="..."style="height: 100px; width: 100px; border-radius: 50%; margin: auto; margin-top: 20px;object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title"style="margin: auto; text-align: center; color:white;">24/7 Support</h5>
+            <p class="card-text pt-5 px-4"style="color: coral; text-align:justify">Provide round-the-clock support for clients, offering assistance and updates on their pets' well-being at any time during their absence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="team container-fluid">
+      <div class="row mt-pt-0 py-2" style="color: coral; background-color: black; height: 50px; font-size: larger; font-weight: bolder;">
+        <div class="col text-center">OUR TEAM</div>
+      </div>
+      </div>
+      <div clas="teamMembers " style="background-color:white;" >
+      <div class="card   px-2 py-4 pt-4 pb-4 mb-4" style="color:coral;background-color:white;height: 200px; border: 0px;" >
+        <div class="row justify-content-center mb-4" style="margin: auto; ">
+        <div class="row col-md-6 me-2 " >
+        <div class="row g-0 " style="background-color:black;color: coral; width: 560px;margin-left: 80px; height: 180px;">
+          <div class="col-md-2">
+            <img src="pics/person1.png" class="img" alt="..." style="height: 100px ; width: 100px; border-radius: 50%;margin-top: 25px; margin-left: 10px;padding-right: 10px; ">
+          </div>
+          <div class="col-md-6 ms-20" >
+            <div class="card-body" style="max-width: 300px;margin-top: 25px;">
+              <h5 class="card-title">Beenu</h5>
+              <p class="card-text"> 
+                <b>Email Id:</b> beenujindal08@gmail.com
+                <br>
+                <!-- <b>College:</b> CGC-Landran -->
+
+            </p>
+              <!-- <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p> -->
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="row col-md-6 me-2">
+
+          <div class="row g-0"  style="color:coral; background-color:black;width: 560px;margin-left: 80px;height: 180px;">
+            <div class="col-md-2">
+              <img src="pics/pngtree-single-person-character-in-vector-png-image_5359691.jpg" class="img" alt="..." style="height: 100px ; width: 100px; border-radius: 50%;margin-top: 25px; margin-left: 10px;padding-right: 10px; ">
+            </div>
+            <div class="col-md-6 ">
+              <div class="card-body" style="margin-top: 25px;">
+                <h5 class="card-title">Rajesh Bansal</h5>
+                <p class="card-text">Author of Real Java</p>
+                <!-- <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p> -->
+              </div>
+            </div>
+          </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="reach container-fluid" >
+        <div class="row mt-pt-0 py-2" style="color: coral; background-color: black; height: 50px; font-size: larger; font-weight: bolder;">
+          <div class="col text-center">REACH US</div>
+        </div>
+        <div class="row" style="background-color:white; height: 200px;" >
+          <div class="col-6 col-md-6 mt-3">
+            <div class="card mb-3 ms-2" style="max-width: 540px; background-color:white;border: 0px;height: 160px;">
+                <div class="row" style="background-color:white;border: 0px;">
+                    <div class="col-md-2">
+                        <img src="pics/logoWeb.png" class="img" alt="..." height="120px" width="100px"style="margin-top:5px;margin-left:15px">
+                    </div>
+                    <div class="col-md-8" style="margin-left: 10px;">
+                        <div class="card-body">
+                            <h5 class="card-title">FurBaby Foster</h5>
+                            <p class="card-text">Where Every Pet Feels At Home</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16" style="margin-top: 0px;">
+                              <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/>
+                            </svg>                  
+                            &nbsp &nbsp   
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-threads" viewBox="0 0 16 16">
+                              <path d="M6.321 6.016c-.27-.18-1.166-.802-1.166-.802.756-1.081 1.753-1.502 3.132-1.502.975 0 1.803.327 2.394.948s.928 1.509 1.005 2.644q.492.207.905.484c1.109.745 1.719 1.86 1.719 3.137 0 2.716-2.226 5.075-6.256 5.075C4.594 16 1 13.987 1 7.994 1 2.034 4.482 0 8.044 0 9.69 0 13.55.243 15 5.036l-1.36.353C12.516 1.974 10.163 1.43 8.006 1.43c-3.565 0-5.582 2.171-5.582 6.79 0 4.143 2.254 6.343 5.63 6.343 2.777 0 4.847-1.443 4.847-3.556 0-1.438-1.208-2.127-1.27-2.127-.236 1.234-.868 3.31-3.644 3.31-1.618 0-3.013-1.118-3.013-2.582 0-2.09 1.984-2.847 3.55-2.847.586 0 1.294.04 1.663.114 0-.637-.54-1.728-1.9-1.728-1.25 0-1.566.405-1.967.868ZM8.716 8.19c-2.04 0-2.304.87-2.304 1.416 0 .878 1.043 1.168 1.6 1.168 1.02 0 2.067-.282 2.232-2.423a6.2 6.2 0 0 0-1.528-.161"/>
+                            </svg>  
+                            &nbsp &nbsp
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                              <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>
+                              </svg>
+                              &nbsp &nbsp
+                              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
+                                <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+                              </svg>
+                               <!-- <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>         
+          <div class="col-md-3 offset-md-1 mb-3" style="height:200px;">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3447.8835127510747!2d74.94962327515749!3d30.211871974839678!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391732a4f014b8f7%3A0x7fa736d540603db!2sSun-Soft%20Technologies%20(%20Android%20Java%20PHP%20Angular%20)!5e0!3m2!1sen!2sin!4v1711022842793!5m2!1sen!2sin" width="500" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      
+        <div class="container-fluid px-0">
+          <div class="last row justify-content-center" style="background-color:black; color:coral; text-align: center; font-weight: bolder; font-size: large; padding: 10px;">
+              <div class="col-12 col-md-6 px-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-c-circle-fill" viewBox="0 0 16 16">
+                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.146 4.992c.961 0 1.641.633 1.729 1.512h1.295v-.088c-.094-1.518-1.348-2.572-3.03-2.572-2.068 0-3.269 1.377-3.269 3.638v1.073c0 2.267 1.178 3.603 3.27 3.603 1.675 0 2.93-1.02 3.029-2.467v-.093H9.875c-.088.832-.75 1.418-1.729 1.418-1.224 0-1.927-.891-1.927-2.461v-1.06c0-1.583.715-2.503 1.927-2.503"/>
+                  </svg>
+                  <span><b>FurBaby Foster</b></span> | All rights reserved!
+              </div>
+          </div>
+      </div>
+      
+    </div>
+    </div>
+    </div>
+      <center>
+        <div class="Modal-boot-SignUp">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content rounded-4 shadow">
+                  <div class="modal-header  pb-1 pt-1 border-bottom-0 header-signup">
+                    <button type="button" class="btn-close ps-4" style="color: coral !important;" id ="btn-cross">
+                  </div>
+                  <div class="modal-body p-5 pt-0">
+                    <form action="/signupNow" method="get">
+                      <div class="form-floating mb-3">
+                        <input type="email"class="form-control rounded-3" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Email address</label>
+                        
+                        <span id="emailtxt"></span>
+                      </div>
+                      <div class="form-floating mb-3">
+                        <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                        <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePassword" style="cursor: pointer;"></i>
+                        <span id="pswdErr"></span>
+                      </div>
+                      <div class="form-floating mb-3">
+                    <select id="usertype" class="form-control rounded-3"  >
+                            <option value="" selected disabled hidden >User Type</option>
+                            <option value="Citizen">Citizen</option>
+                            <option value="Care Taker">Care Taker</option>
+                        </select>
+                        
+                      </div>
+                      <button class="w-100 mb-2 btn-lg  signupnowbtn" style="color: coral;" type="button" id="signupnow">Sign up Now</button>
+                      <br>
+                      <p>
+                        Have an Account? <a class="no-underLine" id="login">Login</a>
+                      </p>
+                       
+                    </form>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </center>
+    <center>
+      <div class="Modal-boot-Login">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content rounded-4 shadow">
+                <div class="modal-header  pb-1 pt-1 border-bottom-0 header-signup">
+                  <button type="button" class="btn-close ps-4" id ="btn-cross-login">
+                </div>
+                <div class="modal-body p-5 pt-0">
+                  <form action="/loginNow" method="get">
+                    <div class="form-floating mb-3">
+                      <input type="email"class="form-control rounded-3" id="loginInput" placeholder="name@example.com">
+                      <label for="loginInput">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                      <input type="password" class="form-control rounded-3" id="loginPassword" placeholder="Password">
+                      <label for="loginPassword">Password</label>
+                      <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePasswordLogin" style="cursor: pointer;"></i>
+                    </div>
+                    <p style="color:coral; text-align: right;" id="forget" name="forget">
+                      Forgot Password?
+                    </p>
+                    <button class="w-100 mb-2 btn-lg  signupnowbtn" type="button" id="loginnow">Login</button>
+                    <span id="LoginCredentials"></span>
+                    <br>
+                    <p >
+                      New User?  <a class="no-underLine" id="signup">Sign Up</a>
+                    </p>
+                  </form>
+                </div>
+              </div>
+            </div>
+      </div>
+  </center>
+  <!-- <a href="dash-admin.html">Admin-Panel</a>
+  <a href="care-taker-finder.html">Finder</a>
+    -->
+    <script src="script/home.js"></script>
+</body>
+</html>

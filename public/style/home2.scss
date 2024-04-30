@@ -1,0 +1,6 @@
+$btn-close-color: coral;
+
+// Use the variable to define the button color
+.#{$prefix}btn-close {
+  color: $btn-close-color;
+}
