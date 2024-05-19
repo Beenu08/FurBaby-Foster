@@ -11,10 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
     "dotenv": "^16.4.5",
-=======
->>>>>>> e27341dc2931d15ae0ac636aab9779087f6ad270
     "express": "^4.18.3",
     "express-fileupload": "^1.4.3",
     "mysql2": "^3.9.2",
