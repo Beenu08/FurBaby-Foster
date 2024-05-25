@@ -9,7 +9,7 @@ app.use(express.static("public"));
 const port = process.env.PORT || 4005;
 
 app.listen(port, function () {
-  console.log("Server Started at 4005");
+  console.log("Server Started ");
 });
 
 let configObj = {
@@ -17,7 +17,7 @@ let configObj = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  dateStrings: process.env.DB_DATESTRINGS === 'true'
+  dateStrings: process.env.DB_DATESTRINGS 
 };
 const mysql = mysql2.createConnection(configObj);
 mysql.connect(function (err) {
